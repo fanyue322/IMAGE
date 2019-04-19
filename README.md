@@ -15,4 +15,7 @@ Example:
 data(ExampleData)
 res=image(geno,data,K)
 ```
+# Results reproduced
+All the results from all methods used in the PMR-Egger paper can be reproduced at https://github.com/3211895/IMAGEreproduce
+
 
