@@ -8,7 +8,7 @@ library(devtools)
 install_github("3211895/IMAGE")
 ```
 # Usage
-The main function is image. You can find the instructions and an example by '?IMAGE'.
+The main function is image. You can find the instructions and an example by '?image'.
 
 Example:
 ```
