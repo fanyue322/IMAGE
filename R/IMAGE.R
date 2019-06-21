@@ -1,3 +1,14 @@
+########################################################################################################################
+# Package: IMAGE
+# Version: 1.0
+# Date   : 2019-06-20
+# Title  : High-powered detection of genetic effects on DNA methylation using integrated methylation QTL mapping and allele-specific analysis
+# Authors: Yue Fan, Shiquan Sun, and Xiang Zhou
+# Contact: yuef@umich.edu
+#          University of Michigan, Department of Biostatistics
+########################################################################################################################
+
+
 image <- function(geno,data,K,Covariates=NULL,numCore=1,fit.maxiter=500,fit.tol=1e-5,verbose=TRUE) {
 
   if(numCore > 1){
@@ -77,7 +88,7 @@ image <- function(geno,data,K,Covariates=NULL,numCore=1,fit.maxiter=500,fit.tol=
       }
     }
 
-    numIDV <- length(CountData)
+    numIDV <- length(homo)+length(heter)
     ratio <- CountData/LibSize
 
     modified_data=data_modify(genotypes,ratio,LibSize,CountData)
@@ -144,8 +155,6 @@ image <- function(geno,data,K,Covariates=NULL,numCore=1,fit.maxiter=500,fit.tol=
     rm(eigval)
     rm(eigvector)
     RelatednessMatrix <- list( RelatednessMatrix, diag(c(rep(0.5, n1), rep(1, 2*n2))))
-    numIDV <- beta <- tau1 <- tau2 <- se_beta <- pvalue <- converged <- h2 <- sigma2 <- overdisp <- NA
-    numIDV=length(LibSize)
     model0$numTotal <- LibSize
     model0$numSucc  <- CountData
     tmpRelatednessMatrix=RelatednessMatrix
@@ -157,8 +166,8 @@ image <- function(geno,data,K,Covariates=NULL,numCore=1,fit.maxiter=500,fit.tol=
     GRM2 <- as.matrix(bdiag(diag(1, nrow=n1),
                             kronecker(diag(nrow=n2), matrix(1, nrow=2, ncol=2)) ))
     RelatednessMatrix[[3]]=GRM2
-    numIDV <- beta <- tau1 <- tau2 <- se_beta <- pvalue <- converged <- h2 <- sigma2 <- overdisp <- NA
-    numIDV=length(LibSize)
+    beta <- tau1 <- tau2 <- se_beta <- pvalue <- converged <- h2 <- sigma2 <- overdisp <- NA
+    
     model0$numTotal <- LibSize
     model0$numSucc  <- CountData
     tmpRelatednessMatrix=RelatednessMatrix

@@ -11,3 +11,5 @@ Description: More details about what the package does. See
 License: GPL (>= 2)
 Imports: Rcpp (>= 0.12.19)
 LinkingTo: Rcpp, RcppArmadillo
+NeedsCompilation: yes
+Packaged: 2019-06-21 00:31:12 UTC; yuef

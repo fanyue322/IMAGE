@@ -1,7 +1,7 @@
 \name{image}
 \alias{image}
 %- Also NEED an '\alias' for EACH other topic documented here.
-\title{Methylation quantitative trait locus mapping assisted with allelic specific methylation pattern for bisulfite sequencing studies.
+\title{High-powered detection of genetic effects on DNA methylation using integrated methylation QTL mapping and allele-specific analysis.
 %%  ~~function to do ... ~~
 }
 \description{
