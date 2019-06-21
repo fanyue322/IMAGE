@@ -3,11 +3,13 @@ Type: Package
 Title: What the Package Does Using Title Case
 Version: 1.0
 Date: 2019-03-01
-Author: Yue Fan, Xiang Zhou
-Maintainer:Yue Fan <xafanyue@163.com>, Xiang Zhou <xzhousph@umich.edu>
-Description: This package provides the functions to fit the IMAGE model
+Author: Your Name
+Maintainer: Your Name <your@email.com>
+Description: More details about what the package does. See
+        <http://cran.r-project.org/doc/manuals/r-release/R-exts.html#The-DESCRIPTION-file>
+        for details on how to write this part.
 License: GPL (>= 2)
-Imports: Rcpp (>= 0.12.19)
+Imports: Rcpp (>= 0.12.19),foreach,doParallel,parallel,Matrix
 LinkingTo: Rcpp, RcppArmadillo
 NeedsCompilation: yes
-Packaged: 2019-06-21 00:31:12 UTC; yuef
+Packaged: 2019-06-21 18:09:38 UTC; yuef
