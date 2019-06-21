@@ -8,11 +8,14 @@ library(devtools)
 install_github("3211895/IMAGE")
 ```
 # Usage
-The main function is methylqtl. You can find the instructions and an example by '?methylqtl'.
+The main function is image. You can find the instructions and an example by '?image'.
 
 Example:
 ```
 data(ExampleData)
 res=image(geno,data,K)
 ```
+# Results reproduced
+All the results from all methods used in the PMR-Egger paper can be reproduced at https://github.com/3211895/IMAGEreproduce
+
 
