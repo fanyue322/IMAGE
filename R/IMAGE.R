@@ -8,6 +8,36 @@
 #          University of Michigan, Department of Biostatistics
 ########################################################################################################################
 
+#' High-powered detection of genetic effects on DNA methylation using integrated methylation QTL mapping and allele-specific analysis.
+#' 
+#' mQTL mapping in bisulfite sequencing studies by fitting a binomial mixed model, incorporating allelic-specific methylation pattern.
+#' 
+#' IMAGE properly accounts for the count nature of bisulfite sequencing data and incorporates allele-specific methylation patterns from heterozygous individuals to enable more powerful mQTL discovery. 
+#' Binomial mixed models (BMM) are fitted using the penalized quasi-likelihood (PQL) method proposed by Breslow and Clayton (1993).
+#'
+#' @param geno a data list containing the genotype data.
+#' @param data a data list containing the methylation data.
+#' @param K a known kinship matrix. This matrix should be a positive semi-definite matrix with dimensions equal to the samplie size.
+#' @param Covariates a matrix containing the covariates subject to adjustment (Default = NULL).
+#' @param numCore a positive integer specifying the number of cores for parallel computing (default = 1).
+#' @param fit.maxiter a positive integer specifying the maximum number of iterations when fitting the generalized linear mixed model (default = 500).
+#' @param fit.tol a positive number specifying tolerance, the difference threshold for parameter estimates below which iterations should be stopped (default = 1e-5).
+#' @param verbose a logical switch for printing detailed information (parameter estimates in each iteration) for testing and debugging purpose (default = TRUE).
+#' @return \item{loc}{ordinal number of SNP-CpG pair being analyzed}
+#' @return \item{numIDV}{number of observations of SNP-CpG pair being analyzed}
+#' @return \item{beta}{the fixed effect parameter estimate for the predictor of interest.}
+#' @return \item{se_beta}{the standard deviation of fixed effect.}
+#' @return \item{pvalue}{P value for the fixed effect, based on the wald test.}
+#' @return \item{h2}{heritability of the transformed rate.}
+#' @return \item{sigma2}{total variance component.}
+#' @return \item{converged}{a logical indicator for convergence.}
+#' @references Breslow, N.E. and Clayton, D.G. (1993) Approximate Inference in Generalized Linear Mixed Models. Journal of the American Statistical Association 88, 9-25.
+#' @author Yue Fan, Shiquan Sun, Xiang Zhou
+#' @examples 
+#' data(exampledata)
+#' res=image(exampledata$geno,exampledata$data,exampledata$K)
+
+
 
 image <- function(geno,data,K,Covariates=NULL,numCore=1,fit.maxiter=500,fit.tol=1e-5,verbose=TRUE) {
 
@@ -25,7 +55,7 @@ image <- function(geno,data,K,Covariates=NULL,numCore=1,fit.maxiter=500,fit.tol=
     numCov     <- dim(Covariates)[2]
     Covariates <- as.matrix(Covariates)
   }
-
+  iVar=0
   resBMM <- foreach(iVar=1:m, .combine=rbind, .errorhandling = 'remove')%dopar%{
 
     res <- data.frame()
@@ -81,7 +111,7 @@ image <- function(geno,data,K,Covariates=NULL,numCore=1,fit.maxiter=500,fit.tol=
       n2 <- 0
       CountData <- c(data$y[homo, iVar])
       LibSize <- c(data$r[homo, iVar])
-      genotypes <- c(pheno1[homo])
+      genotypes <- c(geno1[homo])
       if(numCov>0)
       {
         covariates=Covariates[homo,]
@@ -258,7 +288,7 @@ data_modify <- function(genotypes,ratio,LibSize,CountData) {
 ##########################################################
 #           	   PQLseq FIT FUNCTION					 #
 ##########################################################
-#' @export
+
 PQLseq.fit <- function(model0, RelatednessMatrix, method = "REML", method.optim = "AI", maxiter = 500, tol = 1e-5, verbose = FALSE) {
 
   names(RelatednessMatrix) <- paste("kins", 1:length(RelatednessMatrix), sep="")
@@ -282,7 +312,7 @@ PQLseq.fit <- function(model0, RelatednessMatrix, method = "REML", method.optim 
 ##########################################################
 #       PQLseq FIT AVERAGE INFORMATION FUNCTION			 #
 ##########################################################
-#' @export
+
 PQLseq.AI <- function(model0, RelatednessMatrix, tau = rep(0, length(RelatednessMatrix)+1), fixtau = rep(0, length(RelatednessMatrix)+1), maxiter = 500, tol = 1e-5, verbose = FALSE) {
 
   if(model0$family$family %in% c("binomial")){
@@ -475,7 +505,7 @@ PQLseq.AI <- function(model0, RelatednessMatrix, tau = rep(0, length(Relatedness
 ##########################################################
 #           	   PQLseq2 FIT FUNCTION					 #
 ##########################################################
-#' @export
+
 PQLseq2.fit <- function(model0, RelatednessMatrix, method = "REML", method.optim = "AI", maxiter = 500, tol = 1e-5, verbose = FALSE) {
 
   names(RelatednessMatrix) <- paste("kins", 1:length(RelatednessMatrix), sep="")
@@ -483,7 +513,7 @@ PQLseq2.fit <- function(model0, RelatednessMatrix, method = "REML", method.optim
   if(method.optim == "AI") {
     fixtau.old <- rep(0, length(RelatednessMatrix)+1)
     # to use average information method to fit alternative model
-    model1 <- PQLseq.AI2(model0, RelatednessMatrix, maxiter = maxiter, tol = tol, verbose = verbose)
+    model1 <- PQLseq2.AI(model0, RelatednessMatrix, maxiter = maxiter, tol = tol, verbose = verbose)
     fixtau.new <- 1*(model1$theta < 1.01 * tol)
     
     
@@ -497,7 +527,7 @@ PQLseq2.fit <- function(model0, RelatednessMatrix, method = "REML", method.optim
     while(any(fixtau.new != fixtau.old)) {
       fixtau.old <- fixtau.new
       # to use average information method to fit alternative model
-      model1 <- PQLseq.AI2(model0, RelatednessMatrix, fixtau = fixtau.old, maxiter = maxiter, tol = tol, verbose = verbose)
+      model1 <- PQLseq2.AI(model0, RelatednessMatrix, fixtau = fixtau.old, maxiter = maxiter, tol = tol, verbose = verbose)
       
       
       
@@ -513,7 +543,7 @@ PQLseq2.fit <- function(model0, RelatednessMatrix, method = "REML", method.optim
 ##########################################################
 #       PQLseq2 FIT AVERAGE INFORMATION FUNCTION			 #
 ##########################################################
-#' @export
+
 PQLseq2.AI <- function(model0, RelatednessMatrix, tau = rep(0, length(RelatednessMatrix)+1), fixtau = rep(0, length(RelatednessMatrix)+1), maxiter = 500, tol = 1e-5, verbose = FALSE) {
 
   n=nrow(RelatednessMatrix[[1]])
