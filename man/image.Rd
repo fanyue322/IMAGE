@@ -50,7 +50,10 @@ Binomial mixed models (BMM) are fitted using the penalized quasi-likelihood (PQL
 }
 \examples{
 data(exampledata)
-res=image(exampledata$geno,exampledata$data,exampledata$K)
+attach(exampledata)
+res=image(geno,data,K)
+closeAllConnections()
+detach(exampledata)
 }
 \references{
 Breslow, N.E. and Clayton, D.G. (1993) Approximate Inference in Generalized Linear Mixed Models. Journal of the American Statistical Association 88, 9-25.

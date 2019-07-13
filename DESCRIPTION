@@ -10,9 +10,9 @@ Maintainer: Yue Fan <yuef@umich.edu>
 Description: MQTL mapping in bisulfite sequencing studies by fitting a binomial mixed model, incorporating allelic-specific methylation pattern.
 Encoding: UTF-8
 License: GPL (>= 2)
-Depends: R (>= 3.6.0)
+Depends: R (>= 3.5.0)
 Imports: Rcpp (>= 0.12.19),foreach,doParallel,parallel,Matrix
 LinkingTo: Rcpp, RcppArmadillo
 RoxygenNote: 6.1.1
 NeedsCompilation: yes
-Packaged: 2019-07-08 20:14:35 UTC; yuef
+Packaged: 2019-07-09 12:48:28 UTC; yuef

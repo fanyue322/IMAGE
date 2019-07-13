@@ -35,7 +35,10 @@
 #' @author Yue Fan, Shiquan Sun, Xiang Zhou
 #' @examples 
 #' data(exampledata)
-#' res=image(exampledata$geno,exampledata$data,exampledata$K)
+#' attach(exampledata)
+#' res=image(geno,data,K)
+#' closeAllConnections()
+#' detach(exampledata)
 
 
 

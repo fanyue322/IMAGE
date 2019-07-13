@@ -3,6 +3,10 @@
 #' A simulated example dataset of IMAGE.
 #' The variables are as follows:
 #'
+#' @docType data
+#' @keywords datasets
+#' @name exampledata
+#' @usage data(exampledata)
 #' @format Contains the following objects:
 #' \describe{
 #'   \item{geno}{a data list containing 2 haplotypes.}
@@ -11,5 +15,8 @@
 #' }
 #' @examples 
 #' data(exampledata)
-#' res=image(exampledata$geno,exampledata$data,exampledata$K)
+#' attach(exampledata)
+#' res=image(geno,data,K)
+#' closeAllConnections()
+#' detach(exampledata)
 "exampledata"

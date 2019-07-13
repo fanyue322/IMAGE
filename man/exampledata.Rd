@@ -11,7 +11,7 @@
   \item{K}{a genetic relationship matrix.}
 }}
 \usage{
-exampledata
+data(exampledata)
 }
 \description{
 A simulated example dataset of IMAGE.
@@ -19,6 +19,9 @@ The variables are as follows:
 }
 \examples{
 data(exampledata)
-res=image(exampledata$geno,exampledata$data,exampledata$K)
+attach(exampledata)
+res=image(geno,data,K)
+closeAllConnections()
+detach(exampledata)
 }
 \keyword{datasets}
