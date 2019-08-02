@@ -1,5 +1,5 @@
 # IMAGE
-mQTL mapping in bisulfite sequencing studies by fitting a binomial mixed model, incorporating allelic-specific methylation pattern.
+mQTL mapping in bisulfite sequencing studies by fitting a binomial mixed model, incorporating allelic-specific methylation pattern. Details in [Simulation](https://github.com/fanyue322/IMAGEreproduce)
 
 # Installation
 It is easy to install the development version of IMAGE package using the 'devtools' package.
