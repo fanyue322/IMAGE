@@ -3,7 +3,7 @@ Type: Package
 Title: Title: High-Powered Detection of Genetic Effects on DNA
         Methylation Using Integrated Methylation QTL Mapping and
         Allele-Specific Analysis
-Version: 1.0
+Version: 1.1
 Date: 2019-07-08
 Author: Yue Fan, Shiquan Sun, Xiang Zhou
 Maintainer: Yue Fan <yuef@umich.edu>
@@ -15,4 +15,4 @@ Imports: Rcpp (>= 0.12.19),foreach,doParallel,parallel,Matrix
 LinkingTo: Rcpp, RcppArmadillo
 RoxygenNote: 6.1.1
 NeedsCompilation: yes
-Packaged: 2019-07-09 12:48:28 UTC; yuef
+Packaged: 2019-08-06 23:44:54 UTC; yuef

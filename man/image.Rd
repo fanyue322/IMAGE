@@ -5,7 +5,7 @@
 \title{High-powered detection of genetic effects on DNA methylation using integrated methylation QTL mapping and allele-specific analysis.}
 \usage{
 image(geno, data, K, Covariates = NULL, numCore = 1,
-  fit.maxiter = 500, fit.tol = 1e-05, verbose = TRUE)
+  fit.maxiter = 500, fit.tol = 1e-05, verbose = TRUE, pmt = 0)
 }
 \arguments{
 \item{geno}{a data list containing the genotype data.}
@@ -23,6 +23,8 @@ image(geno, data, K, Covariates = NULL, numCore = 1,
 \item{fit.tol}{a positive number specifying tolerance, the difference threshold for parameter estimates below which iterations should be stopped (default = 1e-5).}
 
 \item{verbose}{a logical switch for printing detailed information (parameter estimates in each iteration) for testing and debugging purpose (default = TRUE).}
+
+\item{pmt}{an integer specifying the permutation approach, set pmt equals either 1 or 2 will produce permuted p-values(default pmt=0).}
 }
 \value{
 \item{loc}{ordinal number of SNP-CpG pair being analyzed}

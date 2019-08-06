@@ -23,6 +23,7 @@
 #' @param fit.maxiter a positive integer specifying the maximum number of iterations when fitting the generalized linear mixed model (default = 500).
 #' @param fit.tol a positive number specifying tolerance, the difference threshold for parameter estimates below which iterations should be stopped (default = 1e-5).
 #' @param verbose a logical switch for printing detailed information (parameter estimates in each iteration) for testing and debugging purpose (default = TRUE).
+#' @param pmt an integer specifying the permutation approach, set pmt equals either 1 or 2 will produce permuted p-values(default pmt=0).
 #' @return \item{loc}{ordinal number of SNP-CpG pair being analyzed}
 #' @return \item{numIDV}{number of observations of SNP-CpG pair being analyzed}
 #' @return \item{beta}{the fixed effect parameter estimate for the predictor of interest.}
@@ -42,7 +43,7 @@
 
 
 
-image <- function(geno,data,K,Covariates=NULL,numCore=1,fit.maxiter=500,fit.tol=1e-5,verbose=TRUE) {
+image <- function(geno,data,K,Covariates=NULL,numCore=1,fit.maxiter=500,fit.tol=1e-5,verbose=TRUE,pmt=0) {
 
   if(numCore > 1){
     if(numCore>detectCores()){warning("PQLseq:: the number of cores you're setting is larger than detected cores!");numCore = detectCores()-1}
@@ -63,6 +64,35 @@ image <- function(geno,data,K,Covariates=NULL,numCore=1,fit.maxiter=500,fit.tol=
 
     res <- data.frame()
 
+
+    if(pmt==2)
+    {
+      for(j in 1:n)
+      {
+        if(data$r[j,iVar]==0)
+        {
+          next
+        }else{
+          methy_1=sum(runif(n=data$y[j,iVar])>=0.5)
+          methy_2=data$y[j,iVar]-methy_1
+          unmethy_1=sum(runif(n=(data$r[j,iVar]-data$y[j,iVar]))>=0.5)
+          unmethy_2=data$r[j,iVar]-data$y[j,iVar]-unmethy_1
+          data$r1[j,iVar]=methy_1+unmethy_1
+          data$r2[j,iVar]=methy_2+unmethy_2
+          data$y1[j,iVar]=methy_1
+          data$y2[j,iVar]=methy_2
+        }
+      }
+      
+      idx=which(data$r[,iVar]>0)
+      idxx=sample(idx)
+      data$r[idx,iVar]=data$r[idxx,iVar]
+      data$r1[idx,iVar]=data$r1[idxx,iVar]
+      data$r2[idx,iVar]=data$r2[idxx,iVar]
+      data$y[idx,iVar]=data$y[idxx,iVar]
+      data$y1[idx,iVar]=data$y1[idxx,iVar]
+      data$y2[idx,iVar]=data$y2[idxx,iVar]
+    }
 
     if(iVar%%100==0&&verbose)
     {
@@ -122,13 +152,28 @@ image <- function(geno,data,K,Covariates=NULL,numCore=1,fit.maxiter=500,fit.tol=
     }
 
     numIDV <- length(homo)+length(heter)
+    if(pmt==1)
+    {
+    
+    idxx=sample(1:length(CountData))
+    LibSize=LibSize[idxx]
+    CountData=CountData[idxx]
+    
+    }
+    
     ratio <- CountData/LibSize
-
+    
+    
+    
+    
+if(pmt==0)
+{
     modified_data=data_modify(genotypes,ratio,LibSize,CountData)
+
     LibSize=modified_data$r
     CountData=modified_data$y
     ratio <- CountData/LibSize
-
+}
     if(numCov>0){
       idxcov=numeric()
       for(icov in 1:numCov)
