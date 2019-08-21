@@ -25,11 +25,52 @@ Details in [here](https://fanyue322.github.io/install.html)
 # Usage
 The main function is image. You can find the instructions and an example by '?image'.
 
-Example:
+##Example
 ```
 data(ExampleData)
+geno <- ExampleData$geno
+K <- ExampleData$K
+data <- ExampleData$data
 res=image(geno,data,K)
 ```
+An example of the outputs IMAGE produces:
+```
+data(example_results)
+```
+A toy example for testing purposes only:
+```
+geno <- list()
+geno$hap1 = matrix(sample(c(0,1),25, replace = TRUE, prob = c(0.6,0.4)),
+                    nrow = 5, ncol = 5)
+geno$hap2 = matrix(sample(c(0,1),25, replace = TRUE, prob = c(0.6,0.4)),
+                    nrow = 5, ncol = 5)
+
+data <- list()
+data$r = matrix(sample(0:50,25, replace = TRUE), nrow = 5, ncol = 5)
+data$y = matrix(sample(0:50,25, replace = TRUE), nrow = 5, ncol = 5)
+data$r1 = matrix(sample(0:50,25, replace = TRUE), nrow = 5, ncol = 5)
+data$r2 = matrix(sample(0:50,25, replace = TRUE), nrow = 5, ncol = 5)
+data$y1 = matrix(sample(0:50,25, replace = TRUE), nrow = 5, ncol = 5)
+data$y2 = matrix(sample(0:50,25, replace = TRUE), nrow = 5, ncol = 5)
+
+K = matrix(runif(25,-0.1,0.1), nrow = 5, ncol = 5)
+
+res=image(geno,data,K)
+```
+To normalize the pvalues:
+```
+p<-res[,5]
+chisq <- qchisq(1-p,1)
+lambda=median(chisq)/qchisq(0.5,1)
+chisq=chisq/lambda
+pvalue=pchisq( chisq, 1, lower.tail = F)
+```
+
+##Code for experiments
+[Simulation](https://github.com/fanyue322/IMAGEreproduce)
+
+[Real data](https://github.com/fanyue322/IMAGEreproduce/tree/master/Realdata)
+
 Details in [here](https://fanyue322.github.io/index.html)
 # Results reproduced
 All the results from all methods used in the paper can be reproduced at https://github.com/fanyue322/IMAGEreproduce
