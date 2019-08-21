@@ -10,10 +10,16 @@ Fan, Y., Vilgalys, T. P., Sun, S., Peng, Q., Tung, J., & Zhou, X. (2019). High-p
 Details in [here](https://fanyue322.github.io/about.html)
 
 # Installation
-It is easy to install the development version of IMAGE package using the 'devtools' package.
+IMAGE is implemented as an R package, which can be installed from either GitHub or CRAN.
+
+# 1. Install from GitHub
 ```
 library(devtools)
 install_github("3211895/IMAGE")
+```
+# 2. Install from CRAN
+```
+install.packages('IMAGE')
 ```
 Details in [here](https://fanyue322.github.io/install.html)
 # Usage
