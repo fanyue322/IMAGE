@@ -66,7 +66,7 @@ chisq=chisq/lambda
 pvalue=pchisq( chisq, 1, lower.tail = F)
 ```
 
-##Code for experiments
+## Code for experiments
 [Simulation](https://github.com/fanyue322/IMAGEreproduce)
 
 [Real data](https://github.com/fanyue322/IMAGEreproduce/tree/master/Realdata)
