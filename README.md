@@ -7,9 +7,6 @@ IMAGE jointly accounts for both allele-specific methylation information from het
 
 Fan, Y., Vilgalys, T. P., Sun, S., Peng, Q., Tung, J., & Zhou, X. (2019). High-powered detection of genetic effects on DNA methylation using integrated methylation QTL mapping and allele-specific analysis. bioRxiv, 615039.
 
-##Our group
-
- <http://www.xzlab.org>.
 Details in [here](https://fanyue322.github.io/about.html)
 
 # Installation
@@ -31,4 +28,6 @@ Details in [here](https://fanyue322.github.io/index.html)
 # Results reproduced
 All the results from all methods used in the paper can be reproduced at https://github.com/fanyue322/IMAGEreproduce
 
+## Our group
 
+ <http://www.xzlab.org>.
