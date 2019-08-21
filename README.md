@@ -1,5 +1,16 @@
 # IMAGE
-mQTL mapping in bisulfite sequencing studies by fitting a binomial mixed model, incorporating allelic-specific methylation pattern. Details in [here](https://fanyue322.github.io/about.html)
+IMAGE is implemented as an open source R package for mQTL mapping in sequencing-based methylation studies. IMAGE properly accounts for the count nature of bisulfite sequencing data and incorporates allele-specific methylation patterns from heterozygous individuals to enable more powerful mQTL discovery. 
+
+IMAGE jointly accounts for both allele-specific methylation information from heterozygous individuals and non-allele-specific methylation information across all individuals, enabling powerful ASM-assisted mQTL mapping. In addition, IMAGE relies on an over-dispersed binomial mixed model to directly model count data, which naturally accounts for sample non-independence resulting from individual relatedness, population stratification, or batch effects that are commonly observed in sequencing studies.IMAGE can identify 50%-64% more mQTL than existing approaches.
+
+## Cite 
+
+Fan, Y., Vilgalys, T. P., Sun, S., Peng, Q., Tung, J., & Zhou, X. (2019). High-powered detection of genetic effects on DNA methylation using integrated methylation QTL mapping and allele-specific analysis. bioRxiv, 615039.
+
+##Our group
+
+ <http://www.xzlab.org>.
+Details in [here](https://fanyue322.github.io/about.html)
 
 # Installation
 It is easy to install the development version of IMAGE package using the 'devtools' package.
