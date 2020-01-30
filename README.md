@@ -16,7 +16,7 @@ IMAGE is implemented as an R package, which can be installed from either GitHub 
 #### 1. Install from GitHub
 ```
 library(devtools)
-install_github("3211895/IMAGE")
+install_github("fanyue322/IMAGE")
 ```
 #### 2. Install from CRAN
 ```
